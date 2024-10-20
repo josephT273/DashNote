@@ -1,0 +1,19 @@
+.loginWithGoogle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid green;
+    box-shadow: 2px 10px 20px black;
+    border-radius: 10px;
+    padding: 0px 20px;
+    cursor: pointer;
+}
+
+.loginWithGoogle:hover{
+    box-shadow: 2px 5px 20px black;
+}
+
+.loginWithGoogle img {
+    width: 40px;
+    height: 40px;
+}
