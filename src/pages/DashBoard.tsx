@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import AddButton from '../components/AddButton';
 import NoteCard from '../components/NoteCard';
 import './Dashboard.css';
-import { getAuth } from 'firebase/auth';
-import { addDoc, collection, doc, getDocs, getFirestore, } from 'firebase/firestore';
+import { getAuth, signOut } from 'firebase/auth';
+import { addDoc, collection, getDocs, getFirestore, } from 'firebase/firestore';
 
 interface Notes {
     id: string,
@@ -25,6 +25,7 @@ const Dashboard = () =>{
         await addDoc(noteRef, {note: note})
         setNewNote(!newNote);
         setNote("");
+        fetchNotes();
     }
     const fetchNotes = async () => {
         if (!userId) return false;
@@ -40,6 +41,11 @@ const Dashboard = () =>{
         });
         setResult(notesArray);
     };
+
+    const handleSignOut =async () => {
+        signOut(auth);
+        window.location.reload;
+    }
 
     useEffect(() => {
         fetchNotes();
@@ -59,6 +65,7 @@ const Dashboard = () =>{
                 <>
                     <div className='title'>
                         <h1>DashNote</h1>
+                        <button className='logoutButton' onClick={handleSignOut}>Logout</button>
                     </div>
                     <div className='noteGrid'>
 

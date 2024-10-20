@@ -1,20 +1,26 @@
 import './App.css'
 import LoginButton from './components/LoginButton'
-import { getAuth, signInWithPopup, GoogleAuthProvider, User } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, User, setPersistence, browserLocalPersistence } from "firebase/auth";
 import './config/firebaseConfig'
 import { useState } from 'react';
 import Dashboard from './pages/DashBoard';
+import { useAuth } from './components/AuthProvider';
 function App() {
 
   const [user, setUser] = useState<User | null>(null);
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
+  const {currentUser} = useAuth();
+
   const handleLogin = () => {
     signInWithPopup(auth, provider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
+      localStorage.setItem("accessToken", token?.toString() || "");
+      localStorage.setItem("user", result.user?.toString() || "");
+
       setUser(result.user);
     }).catch((error) => {
       const errorCode = error.code;
@@ -26,9 +32,13 @@ function App() {
       alert(errorMessage);
     })
   }
+
+  setPersistence(auth, browserLocalPersistence).catch((error) => {
+    console.log("Error ", error)
+  })
   return (
     <>
-    {user ? (
+    {currentUser ? (
       <Dashboard />
     ):(
 
