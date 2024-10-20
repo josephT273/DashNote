@@ -27,24 +27,22 @@ const Dashboard = () =>{
         setNote("");
     }
     const fetchNotes = async () => {
-          const userDocRef = doc(database, "notes/"+userId+"/note");
-          const noteRef = collection(userDocRef, "note");
-          const querySnapshot = await getDocs(noteRef);
-  
-          const notesArray = querySnapshot.docs.map((doc) => {
+        if (!userId) return false;
+        const userDocRef = collection(database, "notes", userId, "note");
+        const querySnapshot = await getDocs(userDocRef);
+
+        const notesArray = querySnapshot.docs.map((doc) => {
             const data = doc.data();
             return {
                 id: doc.id,
                 note: data.note || "", 
             };
         });
-  
-          setResult(notesArray);
-          console.log(notesArray)
-      };
+        setResult(notesArray);
+    };
 
     useEffect(() => {
-        fetchNotes()
+        fetchNotes();
     }, []);
     return (
         <div className='dashboard'>
@@ -63,11 +61,10 @@ const Dashboard = () =>{
                         <h1>DashNote</h1>
                     </div>
                     <div className='noteGrid'>
-                        <NoteCard content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-                        <NoteCard content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-                        <NoteCard content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-                        <NoteCard content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-                        <NoteCard content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+                        {result.map((data) => (
+                        <NoteCard key={data.id} content={data.note} />
+                        ))}
                     </div>
                 </>
             )
