@@ -3,6 +3,7 @@ import LoginButton from './components/LoginButton'
 import { getAuth, signInWithPopup, GoogleAuthProvider, User } from "firebase/auth";
 import './config/firebaseConfig'
 import { useState } from 'react';
+import Dashboard from './pages/DashBoard';
 function App() {
 
   const [user, setUser] = useState<User | null>(null);
@@ -26,14 +27,10 @@ function App() {
     })
   }
   return (
-    <>
-    {user ? (
-    <>
-        
-    </>)
-    :
-    (<LoginButton onClick={handleLogin} />)}
-    </>
+    // <div className='loginPage'>
+    //     <LoginButton onClick={() => {}}/>
+    // </div>
+    <Dashboard />
   )
 }
 
