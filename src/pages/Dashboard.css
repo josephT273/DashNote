@@ -16,6 +16,27 @@
     padding: 14px;
 
 }
+.addNote{
+    display: grid;
+}
+
+textarea {
+    resize: none;
+    padding: 10px;
+    font-size: 20px;
+}
+
+
+.saveNote{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    margin-top: 20px;    
+    background-color: rgba(66, 255, 66, 0.705);
+}
 
 @media (width >= 40em) {
     .noteGrid{

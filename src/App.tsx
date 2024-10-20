@@ -27,10 +27,16 @@ function App() {
     })
   }
   return (
-    // <div className='loginPage'>
-    //     <LoginButton onClick={() => {}}/>
-    // </div>
-    <Dashboard />
+    <>
+    {user ? (
+      <Dashboard />
+    ):(
+
+      <div className='loginPage'>
+      <LoginButton onClick={handleLogin}/>
+      </div>
+      )}
+      </>
   )
 }
 
